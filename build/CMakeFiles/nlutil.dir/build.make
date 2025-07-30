@@ -226,6 +226,20 @@ CMakeFiles/nlutil.dir/src/config_parser.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/nlutil.dir/src/config_parser.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/dstefanescu/Documents/gemini chats/nlproto_native/src/config_parser.cpp" -o CMakeFiles/nlutil.dir/src/config_parser.cpp.s
 
+CMakeFiles/nlutil.dir/src/parameter_generator.cpp.o: CMakeFiles/nlutil.dir/flags.make
+CMakeFiles/nlutil.dir/src/parameter_generator.cpp.o: /Users/dstefanescu/Documents/gemini\ chats/nlproto_native/src/parameter_generator.cpp
+CMakeFiles/nlutil.dir/src/parameter_generator.cpp.o: CMakeFiles/nlutil.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/dstefanescu/Documents/gemini chats/nlproto_native/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/nlutil.dir/src/parameter_generator.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/nlutil.dir/src/parameter_generator.cpp.o -MF CMakeFiles/nlutil.dir/src/parameter_generator.cpp.o.d -o CMakeFiles/nlutil.dir/src/parameter_generator.cpp.o -c "/Users/dstefanescu/Documents/gemini chats/nlproto_native/src/parameter_generator.cpp"
+
+CMakeFiles/nlutil.dir/src/parameter_generator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/nlutil.dir/src/parameter_generator.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/dstefanescu/Documents/gemini chats/nlproto_native/src/parameter_generator.cpp" > CMakeFiles/nlutil.dir/src/parameter_generator.cpp.i
+
+CMakeFiles/nlutil.dir/src/parameter_generator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/nlutil.dir/src/parameter_generator.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/dstefanescu/Documents/gemini chats/nlproto_native/src/parameter_generator.cpp" -o CMakeFiles/nlutil.dir/src/parameter_generator.cpp.s
+
 # Object files for target nlutil
 nlutil_OBJECTS = \
 "CMakeFiles/nlutil.dir/src/async_writer.cpp.o" \
@@ -238,7 +252,8 @@ nlutil_OBJECTS = \
 "CMakeFiles/nlutil.dir/src/results_ring.cpp.o" \
 "CMakeFiles/nlutil.dir/src/thread_pool_worker.cpp.o" \
 "CMakeFiles/nlutil.dir/src/output_manager.cpp.o" \
-"CMakeFiles/nlutil.dir/src/config_parser.cpp.o"
+"CMakeFiles/nlutil.dir/src/config_parser.cpp.o" \
+"CMakeFiles/nlutil.dir/src/parameter_generator.cpp.o"
 
 # External object files for target nlutil
 nlutil_EXTERNAL_OBJECTS =
@@ -254,9 +269,10 @@ libnlutil.a: CMakeFiles/nlutil.dir/src/results_ring.cpp.o
 libnlutil.a: CMakeFiles/nlutil.dir/src/thread_pool_worker.cpp.o
 libnlutil.a: CMakeFiles/nlutil.dir/src/output_manager.cpp.o
 libnlutil.a: CMakeFiles/nlutil.dir/src/config_parser.cpp.o
+libnlutil.a: CMakeFiles/nlutil.dir/src/parameter_generator.cpp.o
 libnlutil.a: CMakeFiles/nlutil.dir/build.make
 libnlutil.a: CMakeFiles/nlutil.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/dstefanescu/Documents/gemini chats/nlproto_native/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX static library libnlutil.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/dstefanescu/Documents/gemini chats/nlproto_native/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX static library libnlutil.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/nlutil.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/nlutil.dir/link.txt --verbose=$(VERBOSE)
 

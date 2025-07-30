@@ -49,6 +49,7 @@ add_library(nlutil STATIC
     src/thread_pool_worker.cpp
     src/output_manager.cpp
     src/config_parser.cpp
+    src/parameter_generator.cpp
 )
 target_include_directories(nlutil
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include

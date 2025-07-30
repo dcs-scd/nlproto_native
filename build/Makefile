@@ -403,6 +403,30 @@ src/output_manager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/nlutil.dir/build.make CMakeFiles/nlutil.dir/src/output_manager.cpp.s
 .PHONY : src/output_manager.cpp.s
 
+src/parameter_generator.o: src/parameter_generator.cpp.o
+.PHONY : src/parameter_generator.o
+
+# target to build an object file
+src/parameter_generator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/nlutil.dir/build.make CMakeFiles/nlutil.dir/src/parameter_generator.cpp.o
+.PHONY : src/parameter_generator.cpp.o
+
+src/parameter_generator.i: src/parameter_generator.cpp.i
+.PHONY : src/parameter_generator.i
+
+# target to preprocess a source file
+src/parameter_generator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/nlutil.dir/build.make CMakeFiles/nlutil.dir/src/parameter_generator.cpp.i
+.PHONY : src/parameter_generator.cpp.i
+
+src/parameter_generator.s: src/parameter_generator.cpp.s
+.PHONY : src/parameter_generator.s
+
+# target to generate assembly for a file
+src/parameter_generator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/nlutil.dir/build.make CMakeFiles/nlutil.dir/src/parameter_generator.cpp.s
+.PHONY : src/parameter_generator.cpp.s
+
 src/results_ring.o: src/results_ring.cpp.o
 .PHONY : src/results_ring.o
 
@@ -516,6 +540,9 @@ help:
 	@echo "... src/output_manager.o"
 	@echo "... src/output_manager.i"
 	@echo "... src/output_manager.s"
+	@echo "... src/parameter_generator.o"
+	@echo "... src/parameter_generator.i"
+	@echo "... src/parameter_generator.s"
 	@echo "... src/results_ring.o"
 	@echo "... src/results_ring.i"
 	@echo "... src/results_ring.s"

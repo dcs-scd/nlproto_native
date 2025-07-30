@@ -16,6 +16,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/dstefanescu/Documents/gemini chats/nlproto_native/src/jni_bridge.cpp" "CMakeFiles/nlutil.dir/src/jni_bridge.cpp.o" "gcc" "CMakeFiles/nlutil.dir/src/jni_bridge.cpp.o.d"
   "/Users/dstefanescu/Documents/gemini chats/nlproto_native/src/jvm_manager.cpp" "CMakeFiles/nlutil.dir/src/jvm_manager.cpp.o" "gcc" "CMakeFiles/nlutil.dir/src/jvm_manager.cpp.o.d"
   "/Users/dstefanescu/Documents/gemini chats/nlproto_native/src/output_manager.cpp" "CMakeFiles/nlutil.dir/src/output_manager.cpp.o" "gcc" "CMakeFiles/nlutil.dir/src/output_manager.cpp.o.d"
+  "/Users/dstefanescu/Documents/gemini chats/nlproto_native/src/parameter_generator.cpp" "CMakeFiles/nlutil.dir/src/parameter_generator.cpp.o" "gcc" "CMakeFiles/nlutil.dir/src/parameter_generator.cpp.o.d"
   "/Users/dstefanescu/Documents/gemini chats/nlproto_native/src/results_ring.cpp" "CMakeFiles/nlutil.dir/src/results_ring.cpp.o" "gcc" "CMakeFiles/nlutil.dir/src/results_ring.cpp.o.d"
   "/Users/dstefanescu/Documents/gemini chats/nlproto_native/src/retry_policy.cpp" "CMakeFiles/nlutil.dir/src/retry_policy.cpp.o" "gcc" "CMakeFiles/nlutil.dir/src/retry_policy.cpp.o.d"
   "/Users/dstefanescu/Documents/gemini chats/nlproto_native/src/thread_pool_worker.cpp" "CMakeFiles/nlutil.dir/src/thread_pool_worker.cpp.o" "gcc" "CMakeFiles/nlutil.dir/src/thread_pool_worker.cpp.o.d"

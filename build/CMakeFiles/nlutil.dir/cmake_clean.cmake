@@ -15,6 +15,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/nlutil.dir/src/jvm_manager.cpp.o.d"
   "CMakeFiles/nlutil.dir/src/output_manager.cpp.o"
   "CMakeFiles/nlutil.dir/src/output_manager.cpp.o.d"
+  "CMakeFiles/nlutil.dir/src/parameter_generator.cpp.o"
+  "CMakeFiles/nlutil.dir/src/parameter_generator.cpp.o.d"
   "CMakeFiles/nlutil.dir/src/results_ring.cpp.o"
   "CMakeFiles/nlutil.dir/src/results_ring.cpp.o.d"
   "CMakeFiles/nlutil.dir/src/retry_policy.cpp.o"
