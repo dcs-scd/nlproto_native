@@ -1,0 +1,8 @@
+/Users/dstefanescu/Documents/gemini chats/nlproto_native/build/CMakeFiles/nlutil.dir
+/Users/dstefanescu/Documents/gemini chats/nlproto_native/build/CMakeFiles/nlserver.dir
+/Users/dstefanescu/Documents/gemini chats/nlproto_native/build/CMakeFiles/edit_cache.dir
+/Users/dstefanescu/Documents/gemini chats/nlproto_native/build/CMakeFiles/rebuild_cache.dir
+/Users/dstefanescu/Documents/gemini chats/nlproto_native/build/CMakeFiles/list_install_components.dir
+/Users/dstefanescu/Documents/gemini chats/nlproto_native/build/CMakeFiles/install.dir
+/Users/dstefanescu/Documents/gemini chats/nlproto_native/build/CMakeFiles/install/local.dir
+/Users/dstefanescu/Documents/gemini chats/nlproto_native/build/CMakeFiles/install/strip.dir

@@ -1,0 +1,86 @@
+# Example 5: Parameter Specification Methods Showcase
+# Comprehensive demonstration of all parameter specification types
+# Shows when and how to use each method effectively
+
+model: "models/sample.nlogo"
+ticks: 150
+
+parameters:
+  # Method 1: Range Specification (Linear Spacing)
+  # Best for: Continuous variables with uniform importance across range
+  # Use case: Testing effect of population size in regular increments
+  - name: "population-size"
+    spec:
+      min: 100.0
+      max: 500.0
+      step: 100.0
+    # Results in: [100, 200, 300, 400, 500]
+
+  # Method 2: Fine-grained Range (Dense Sampling)
+  # Best for: Identifying critical thresholds or phase transitions
+  # Use case: Finding optimal learning rates or mutation probabilities
+  - name: "learning-rate"
+    spec:
+      min: 0.01
+      max: 0.10
+      step: 0.01
+    # Results in: [0.01, 0.02, 0.03, ..., 0.10] (10 values)
+
+  # Method 3: Logarithmic Specification (Exponential Spacing)
+  # Best for: Variables spanning multiple orders of magnitude
+  # Use case: Testing different time scales, rates, or probabilities
+  - name: "mutation-rate"
+    spec:
+      n: 6
+      base: 10.0
+    # Results in: [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1]
+
+  # Method 4: Custom Base Logarithmic
+  # Best for: Non-decimal exponential growth (e.g., powers of 2)
+  # Use case: Network sizes, memory allocations, iteration counts
+  - name: "network-size"
+    spec:
+      n: 5
+      base: 2.0
+    # Results in: [1, 2, 4, 8, 16]
+
+  # Method 5: Explicit Value Lists (Categorical/Custom)
+  # Best for: Specific values of interest, categorical variables
+  # Use case: Testing known important values, strategy comparisons
+  - name: "strategy-type"
+    spec:
+      values: [0.0, 0.25, 0.5, 0.618, 0.75, 1.0]
+    # Results in: Exactly these 6 specific values
+
+  # Method 6: Sparse Sampling (Large Steps)
+  # Best for: Initial exploration of wide parameter spaces
+  # Use case: Preliminary screening before fine-grained analysis
+  - name: "environment-complexity"
+    spec:
+      min: 0.0
+      max: 1.0
+      step: 0.2
+    # Results in: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+
+  # Method 7: Critical Values Focus
+  # Best for: Testing around known important points
+  # Use case: Sensitivity analysis around equilibrium points
+  - name: "threshold-parameter"
+    spec:
+      values: [0.45, 0.48, 0.49, 0.5, 0.51, 0.52, 0.55]
+    # Focused around critical value of 0.5
+
+# Adaptive repetitions based on parameter combinations
+repetitions:
+  reps: [3, 5, 8]  # Start with 3, increase if high variance detected
+
+# Comprehensive metrics for pattern detection
+metrics:
+  - name: "system-efficiency"
+    aggregate: "mean"
+  - name: "population-stability"
+    aggregate: "mean"
+  - name: "convergence-time"
+    aggregate: "mean"
+  - name: "final-diversity"
+    aggregate: "mean"

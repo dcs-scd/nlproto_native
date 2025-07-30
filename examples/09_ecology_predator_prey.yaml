@@ -1,0 +1,75 @@
+# Example 9: Ecology Model - Predator-Prey Dynamics
+# Research question: How do environmental factors affect predator-prey stability?
+# Use case: Studying ecosystem resilience under varying conditions
+
+model: "models/Wolf_Sheep_Predation.nlogo"  # Classic NetLogo model
+ticks: 400  # Long enough to observe population cycles
+
+parameters:
+  # Core ecological parameters
+  - name: "initial-number-sheep"
+    spec:
+      min: 50.0
+      max: 150.0
+      step: 25.0
+    # Values: [50, 75, 100, 125, 150]
+
+  - name: "initial-number-wolves"
+    spec:
+      min: 10.0
+      max: 40.0
+      step: 10.0
+    # Values: [10, 20, 30, 40]
+
+  # Reproduction rates (logarithmic for biological realism)
+  - name: "sheep-reproduce"
+    spec:
+      n: 6
+      base: 2.0
+    # Exponential spacing: [1, 2, 4, 8, 16, 32]
+
+  - name: "wolf-reproduce"
+    spec:
+      n: 5
+      base: 2.0
+    # Values: [1, 2, 4, 8, 16]
+
+  # Environmental carrying capacity
+  - name: "grass-regrowth-time"
+    spec:
+      values: [15, 20, 25, 30, 35, 40]
+    # Critical values affecting resource availability
+
+  # Energy dynamics
+  - name: "sheep-gain-from-food"
+    spec:
+      min: 2.0
+      max: 8.0
+      step: 1.0
+
+  - name: "wolf-gain-from-food"
+    spec:
+      min: 10.0
+      max: 30.0
+      step: 5.0
+
+# Multiple repetitions for population dynamics (high stochasticity)
+repetitions:
+  reps: [8, 12, 15]  # Adaptive: more reps if high variance in populations
+
+# Comprehensive ecological metrics
+metrics:
+  - name: "count-sheep"
+    aggregate: "mean"
+  - name: "count-wolves"
+    aggregate: "mean"
+  - name: "count-grass"
+    aggregate: "mean"
+  - name: "population-stability-index"
+    aggregate: "mean"
+  - name: "predator-prey-ratio"
+    aggregate: "mean"
+  - name: "ecosystem-persistence"
+    aggregate: "mean"
+  - name: "extinction-events"
+    aggregate: "sum"

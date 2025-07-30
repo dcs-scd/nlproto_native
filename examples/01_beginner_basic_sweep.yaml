@@ -1,0 +1,78 @@
+# Beginner Example: Basic Parameter Sweep
+# Perfect for learning the system - simple 3x3 grid (9 combinations)
+
+name: "beginner_basic_sweep"
+description: "Simple parameter sweep for learning the system"
+
+# Model Configuration
+modelpath: "/users/dstefanescu/Desktop/NetLogo 6.4.0/models/Sample Models/Biology/Evolution/Peppered Moths.nlogo"
+nlpath: "/Applications/NetLogo 6.4.0"
+
+# Java Configuration (auto-detected based on your OS)
+java_home:
+  linux: "/usr/lib/jvm/java-11-openjdk-amd64"
+  macos: "/Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home"
+  windows: "C:\\Program Files\\Java\\jdk-11"
+
+# Experiment Configuration
+experiment:
+  # Short runtime for quick testing
+  runtime: 50
+  
+  # Single seed for consistent results
+  base_seed: 42
+  seeds_per_combo: 1
+  
+  # Simple 3x3 parameter grid
+  variables:
+    mutation:
+      type: range
+      min: 1
+      max: 3
+      step: 1
+      
+    selection:
+      type: range  
+      min: 10
+      max: 30
+      step: 10
+  
+  # Basic metrics to track
+  metrics:
+    - light-moths
+    - dark-moths
+
+# Simple execution settings
+execution:
+  cores: 2  # Conservative for beginners
+  chunk_size: 3
+  executor_backend: "original"
+  
+  # Memory settings
+  estimated_memory_per_run_mb: 256
+  estimated_task_duration: 10.0
+
+# Skip benchmarking for simplicity
+benchmark:
+  benchmark_mode: "use_config_only"
+
+# Basic logging
+logging:
+  level: "INFO"
+  directory: "results/logs"
+
+# Simple output
+output:
+  base_directory: "results"
+  save_individual_results: true
+  save_combined_results: true
+  formats:
+    - "csv"
+  compress_results: false
+
+# Basic health check
+perform_health_check_on_startup: true
+health_check:
+  check_netlogo_installation: true
+  check_model_file: true
+  check_available_memory: true

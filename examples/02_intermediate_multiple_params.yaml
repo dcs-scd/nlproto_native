@@ -1,0 +1,40 @@
+# Example 2: Multiple Parameter Types - Intermediate Level
+# Demonstrates different parameter specification methods:
+# - Range with step
+# - Logarithmic spacing
+# - Explicit value lists
+
+model: "models/sample.nlogo"
+ticks: 200
+
+parameters:
+  # Range specification: linear spacing
+  - name: "population-size"
+    spec:
+      min: 50.0
+      max: 200.0
+      step: 50.0  # Values: 50, 100, 150, 200
+
+  # Logarithmic specification: exponential spacing
+  - name: "mutation-rate"
+    spec:
+      n: 4
+      base: 10.0  # Values: 0.001, 0.01, 0.1, 1.0
+
+  # Explicit values: custom list
+  - name: "selection-pressure"
+    spec:
+      values: [0.5, 0.75, 1.0, 1.25, 1.5]
+
+# Multiple repetitions for statistical robustness
+repetitions:
+  reps: [3, 5, 10]  # Adaptive: start with 3, up to 10 if needed
+
+# Multiple metrics for comprehensive analysis
+metrics:
+  - name: "mean-fitness"
+    aggregate: "mean"
+  - name: "population-diversity"
+    aggregate: "mean"
+  - name: "extinction-events"
+    aggregate: "sum"

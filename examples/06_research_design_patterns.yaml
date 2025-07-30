@@ -1,0 +1,123 @@
+# Example 6: Research Design Patterns
+# Common parameter specification patterns for different research questions
+# Choose the pattern that matches your research goals
+
+# Pattern A: Sensitivity Analysis
+# Question: "How sensitive is the system to small changes in key parameters?"
+sensitivity_analysis_example:
+  model: "models/sample.nlogo"
+  ticks: 200
+  parameters:
+    # High-resolution sampling around baseline values
+    - name: "baseline-parameter"
+      spec:
+        min: 0.45
+        max: 0.55
+        step: 0.005  # Very fine steps for sensitivity detection
+    
+    - name: "secondary-parameter" 
+      spec:
+        values: [0.8, 1.0, 1.2]  # Few values to control for interactions
+
+# Pattern B: Threshold Detection
+# Question: "At what parameter values do qualitative changes occur?"
+threshold_detection_example:
+  model: "models/sample.nlogo"
+  ticks: 300
+  parameters:
+    # Dense sampling across wide range to catch transitions
+    - name: "critical-parameter"
+      spec:
+        min: 0.0
+        max: 2.0
+        step: 0.05  # Fine enough to catch threshold crossings
+    
+    - name: "context-parameter"
+      spec:
+        values: [0.5, 1.0, 1.5]  # Test thresholds in different contexts
+
+# Pattern C: Optimization Search
+# Question: "What parameter combination gives the best performance?"
+optimization_search_example:
+  model: "models/sample.nlogo" 
+  ticks: 250
+  parameters:
+    # Multi-dimensional grid search
+    - name: "parameter-1"
+      spec:
+        min: 0.1
+        max: 1.0
+        step: 0.1  # Coarse grid first
+    
+    - name: "parameter-2"
+      spec:
+        min: 0.1  
+        max: 1.0
+        step: 0.1
+    
+    - name: "parameter-3"
+      spec:
+        values: [0.25, 0.5, 0.75]  # Fewer values for 3rd dimension
+
+# Pattern D: Scale Effects Investigation
+# Question: "How do effects change across different scales?"
+scale_effects_example:
+  model: "models/sample.nlogo"
+  ticks: 400
+  parameters:
+    # Logarithmic sampling for scale effects
+    - name: "system-size"
+      spec:
+        n: 8
+        base: 2.0  # Powers of 2: 1, 2, 4, 8, 16, 32, 64, 128
+    
+    - name: "interaction-range"
+      spec:
+        n: 6
+        base: 10.0  # Multiple orders of magnitude
+
+# Pattern E: Robustness Testing
+# Question: "How robust are results across different conditions?"
+robustness_testing_example:
+  model: "models/sample.nlogo"
+  ticks: 180
+  parameters:
+    # Wide coverage with emphasis on extremes
+    - name: "stress-parameter"
+      spec:
+        values: [0.01, 0.1, 0.2, 0.5, 0.8, 0.9, 0.99]  # Include extreme values
+    
+    - name: "noise-level"
+      spec:
+        min: 0.0
+        max: 0.5
+        step: 0.05
+    
+    - name: "random-seed"
+      spec:
+        values: [1, 42, 123, 456, 789, 999, 1337, 2023, 3141, 9999]  # Multiple seeds for robustness
+
+# Use this actual configuration for the example
+model: "models/sample.nlogo"
+ticks: 200
+
+# Example implements Sensitivity Analysis pattern
+parameters:
+  - name: "baseline-parameter"
+    spec:
+      min: 0.45
+      max: 0.55
+      step: 0.005
+  
+  - name: "secondary-parameter"
+    spec:
+      values: [0.8, 1.0, 1.2]
+
+repetitions:
+  reps: [5, 10]  # Higher reps for detecting small effects
+
+metrics:
+  - name: "primary-outcome"
+    aggregate: "mean"
+  - name: "outcome-variance"
+    aggregate: "mean"

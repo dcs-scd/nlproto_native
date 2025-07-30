@@ -1,0 +1,57 @@
+package nl.proto;
+
+import org.nlogo.api.*;
+import org.nlogo.workspace.*;
+
+import java.io.File;
+
+public final class NetLogoRunner implements AutoCloseable {
+
+    private final HeadlessWorkspace ws;
+    private final String modelPath;
+
+    /* ---------- construction — load model only once ------------- */
+    public NetLogoRunner(String modelPath) throws Exception {
+        this.modelPath = modelPath;
+        File mf = new File(modelPath);
+        if (!mf.exists()) throw new IllegalArgumentException("Model file not found: " + modelPath);
+
+        ws = HeadlessWorkspace.newInstance();
+        ws.open(modelPath);
+    }
+
+    /* ---------- fast, thread-compatible run ---------------------- */
+    public double[] run(int ticks, double paramA, double paramB, int rep) throws Exception {
+        // deterministic seed for *this* repetition (idempotent on retry)
+        int runSeed = 42 + rep * 314159;
+
+        synchronized (ws) {             // if reused across workers
+            try {
+                ws.command("clear-all");
+                ws.command("random-seed " + runSeed);
+                ws.command("set ant-start " + paramA);
+                ws.command("set evaporation-rate " + paramB);
+                ws.command("setup");
+                for (int i = 0; i < ticks; i++) ws.command("go");
+
+                final double mean   = parse(ws.report("mean [count ants] of ants"));
+                final double stdev  = parse(ws.report("standard-deviation [count ants] of ants"));
+                final double entropy = parse(ws.report("entropy"));
+                return new double[]{mean, stdev, entropy};
+
+            } catch (WrappedEngineException | EngineException ex) {
+                throw new RuntimeException("Model-level error @" + modelPath, ex);
+            } catch (HeadlessWorkspace.DisposedException ex) {
+                throw new Error("JVM/Workspace disposed – unrecoverable", ex);
+            }
+        }
+    }
+
+    private static double parse(Object o) {
+        return Double.parseDouble(o.toString());
+    }
+
+    public void close() {
+        try { ws.dispose(); } catch (Exception ignored) {}
+    }
+}

@@ -1,0 +1,86 @@
+cmake_minimum_required(VERSION 3.18)
+project(nlserver)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+# threading
+find_package(Threads REQUIRED)
+
+# Required dependencies
+find_package(PkgConfig REQUIRED)
+find_package(benchmark REQUIRED)
+find_package(yaml-cpp REQUIRED)
+find_package(spdlog REQUIRED)
+find_package(CLI11 REQUIRED)
+
+# zstd (Zstandard compression)
+pkg_check_modules(ZSTD REQUIRED libzstd)
+
+# hwloc
+pkg_check_modules(HWLOC REQUIRED hwloc)
+
+set(INCLUDES
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+set(LIB_SRC
+    src/benchmark1.cpp
+    src/async_writer.cpp
+    src/retry_policy.cpp
+    src/circuit_breaker.cpp
+    src/results_ring.cpp
+)
+
+set(HEADERS
+    ${INCLUDES}/config.hpp
+    ${INCLUDES}/expander.hpp
+    ${INCLUDES}/results_ring.hpp
+    ${INCLUDES}/circuit_breaker.hpp
+    ${INCLUDES}/retry_policy.hpp
+    ${INCLUDES}/async_writer.hpp
+)
+
+add_library(nlutil STATIC ${HEADERS} ${LIB_SRC})
+
+target_include_directories(nlutil
+    PRIVATE ${ZSTD_INCLUDE_DIRS}
+    PRIVATE ${HWLOC_INCLUDE_DIRS}
+    PRIVATE ${INCLUDES}
+)
+
+target_link_libraries(nlutil
+    PRIVATE Threads::Threads
+    PRIVATE ${ZSTD_LIBRARIES}
+    PRIVATE ${HWLOC_LIBRARIES}
+    PRIVATE benchmark::benchmark
+    PRIVATE yaml-cpp::yaml-cpp
+    PRIVATE spdlog::spdlog
+    PRIVATE CLI11::CLI11
+)
+
+add_executable(${PROJECT_NAME}
+    main.cpp
+)
+
+target_include_directories(${PROJECT_NAME}
+    PRIVATE ${ZSTD_INCLUDE_DIRS}
+    PRIVATE ${HWLOC_INCLUDE_DIRS}
+    PRIVATE ${INCLUDES}
+)
+
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE nlutil
+    PRIVATE Threads::Threads
+    PRIVATE ${ZSTD_LIBRARIES}
+    PRIVATE ${HWLOC_LIBRARIES}
+    PRIVATE benchmark::benchmark
+    PRIVATE yaml-cpp::yaml-cpp
+    PRIVATE spdlog::spdlog
+    PRIVATE CLI11::CLI11
+)
+
+install(TARGETS ${PROJECT_NAME}
+    RUNTIME DESTINATION bin
+)

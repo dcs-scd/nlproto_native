@@ -1,0 +1,35 @@
+# Example 4: Performance Benchmarking Configuration
+# Optimized for maximum throughput and system testing
+# Includes JVM tuning and parallel execution settings
+
+model: "models/sample.nlogo"
+ticks: 50  # Short runs for benchmark focus
+
+parameters:
+  # Minimal parameter space for performance testing
+  - name: "population-size"
+    spec:
+      values: [50, 100, 200, 500, 1000]
+  
+  - name: "interaction-radius"
+    spec:
+      min: 1.0
+      max: 5.0
+      step: 1.0
+
+# Consistent repetitions for timing measurement
+repetitions:
+  reps: [10]  # Fixed repetitions for consistent benchmarking
+
+# Minimal metrics for performance focus
+metrics:
+  - name: "final-population"
+    aggregate: "mean"
+  - name: "simulation-time"
+    aggregate: "mean"
+
+# Performance-oriented settings would be in the C++ benchmark system:
+# - Optimized thread count (auto-detected based on CPU cores)
+# - JVM heap sizing based on available memory
+# - EpsilonGC for minimal garbage collection overhead
+# - Optimized compilation thresholds

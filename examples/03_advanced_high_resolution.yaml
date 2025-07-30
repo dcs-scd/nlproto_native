@@ -1,0 +1,51 @@
+# Example 3: High-Resolution Parameter Sweep - Advanced Level
+# Large-scale parameter exploration with fine-grained sampling
+# Suitable for comprehensive research studies
+
+model: "models/peppered_moths.nlogo"
+ticks: 500
+
+parameters:
+  # Fine-grained mutation rate sweep
+  - name: "mutation"
+    spec:
+      min: 0.0
+      max: 20.0
+      step: 0.5  # 41 values
+
+  # Selection pressure with logarithmic distribution
+  - name: "selection"
+    spec:
+      n: 20
+      base: 2.0  # Exponential spacing for wide range coverage
+
+  # Environmental conditions
+  - name: "environment-harshness"
+    spec:
+      values: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+
+  # Population dynamics
+  - name: "carrying-capacity"
+    spec:
+      min: 100.0
+      max: 1000.0
+      step: 100.0
+
+# High repetition count for robust statistics
+repetitions:
+  reps: [5, 10, 15, 20]  # Adaptive repetitions based on variance
+
+# Comprehensive metrics collection
+metrics:
+  - name: "light-moths"
+    aggregate: "mean"
+  - name: "dark-moths" 
+    aggregate: "mean"
+  - name: "medium-moths"
+    aggregate: "mean"
+  - name: "total-population"
+    aggregate: "mean"
+  - name: "genetic-diversity"
+    aggregate: "mean"
+  - name: "adaptation-rate"
+    aggregate: "mean"

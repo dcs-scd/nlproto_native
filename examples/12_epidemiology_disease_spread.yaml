@@ -1,0 +1,89 @@
+# Example 12: Epidemiology - Disease Spread and Intervention Strategies
+# Research question: How do different interventions affect epidemic outcomes?
+# Use case: Public health policy evaluation and pandemic preparedness
+
+model: "models/Virus_Spread.nlogo"  # Epidemiological model
+ticks: 365  # One year simulation period
+
+parameters:
+  # Population and contact patterns
+  - name: "population-size"
+    spec:
+      values: [500, 1000, 2000, 5000, 10000]
+    # Different population scales
+
+  - name: "average-contacts-per-day"
+    spec:
+      min: 2.0
+      max: 20.0
+      step: 2.0
+    # Social contact rates: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+
+  # Disease characteristics  
+  - name: "infection-probability"
+    spec:
+      min: 0.01
+      max: 0.20
+      step: 0.01
+    # Transmission probability per contact: 20 values
+
+  - name: "recovery-time"
+    spec:
+      values: [5, 7, 10, 14, 21, 28]
+    # Recovery period in days
+
+  - name: "immunity-duration"
+    spec:
+      values: [90, 180, 365, 730, -1]  # -1 = permanent immunity
+    # Duration of immunity after recovery
+
+  # Intervention strategies
+  - name: "social-distancing-effectiveness"
+    spec:
+      min: 0.0
+      max: 0.8
+      step: 0.1
+    # Reduction in contacts: [0%, 10%, 20%, ..., 80%]
+
+  - name: "vaccination-rate"
+    spec:
+      min: 0.0
+      max: 0.05
+      step: 0.005
+    # Daily vaccination rate: [0%, 0.5%, 1%, ..., 5%]
+
+  - name: "quarantine-compliance"
+    spec:
+      values: [0.0, 0.3, 0.5, 0.7, 0.8, 0.9, 0.95]
+    # Proportion following quarantine
+
+  # Spatial factors
+  - name: "mobility-reduction"
+    spec:
+      min: 0.0
+      max: 0.9
+      step: 0.1
+    # Reduction in spatial movement
+
+# Epidemiological models have high stochasticity
+repetitions:
+  reps: [15, 25, 35]  # Many repetitions for robust epidemic statistics
+
+# Public health metrics
+metrics:
+  - name: "total-infected"
+    aggregate: "mean"
+  - name: "peak-infections"
+    aggregate: "mean"
+  - name: "time-to-peak"
+    aggregate: "mean"
+  - name: "epidemic-duration"
+    aggregate: "mean"
+  - name: "final-attack-rate"
+    aggregate: "mean"
+  - name: "healthcare-burden"
+    aggregate: "mean"
+  - name: "intervention-effectiveness"
+    aggregate: "mean"
+  - name: "economic-cost"
+    aggregate: "mean"

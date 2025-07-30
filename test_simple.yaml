@@ -1,0 +1,8 @@
+name: "simple_test"
+ticks: 50
+reps: 1
+parallel: 2
+model: "/users/dstefanescu/Desktop/NetLogo 6.4.0/models/Sample Models/Biology/Evolution/Peppered Moths.nlogo"
+sweep:
+  mutation: ["1", "2", "3"]
+  selection: ["10", "20", "30"]

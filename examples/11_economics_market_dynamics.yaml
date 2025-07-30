@@ -1,0 +1,77 @@
+# Example 11: Economics - Market Dynamics and Agent Trading
+# Research question: How do market parameters affect price stability and efficiency?
+# Use case: Testing economic theories under different market conditions
+
+model: "models/Market_Economy.nlogo"  # Economic agent-based model
+ticks: 500  # Long enough for market equilibration
+
+parameters:
+  # Market structure
+  - name: "num-traders"
+    spec:
+      n: 6
+      base: 2.0
+    # Market sizes: [8, 16, 32, 64, 128, 256] traders
+
+  - name: "initial-money"
+    spec:
+      values: [100, 200, 500, 1000, 2000]
+    # Different wealth distributions
+
+  # Trading behavior parameters
+  - name: "price-volatility"
+    spec:
+      min: 0.01
+      max: 0.20
+      step: 0.01
+    # Fine-grained volatility analysis: 20 values
+
+  - name: "trading-frequency"
+    spec:
+      min: 0.1
+      max: 1.0
+      step: 0.1
+    # How often agents attempt trades
+
+  # Information and learning
+  - name: "information-spread-rate"
+    spec:
+      n: 5
+      base: 10.0
+    # Exponential: [0.0001, 0.001, 0.01, 0.1, 1.0]
+
+  - name: "learning-rate"
+    spec:
+      values: [0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5]
+    # Behavioral economics learning rates
+
+  # Market regulations
+  - name: "transaction-cost"
+    spec:
+      min: 0.0
+      max: 0.05
+      step: 0.005
+    # Impact of transaction costs: [0, 0.005, 0.01, ..., 0.05]
+
+# Economic simulations need many repetitions due to stochastic trading
+repetitions:
+  reps: [12, 18, 25]  # High variance in economic outcomes
+
+# Economic metrics for market analysis
+metrics:
+  - name: "average-price"
+    aggregate: "mean"
+  - name: "price-volatility-realized"
+    aggregate: "mean"
+  - name: "market-efficiency"
+    aggregate: "mean"
+  - name: "wealth-inequality-gini"
+    aggregate: "mean"
+  - name: "trading-volume"
+    aggregate: "mean"
+  - name: "arbitrage-opportunities"
+    aggregate: "mean"
+  - name: "market-crashes"
+    aggregate: "sum"
+  - name: "convergence-to-equilibrium"
+    aggregate: "mean"

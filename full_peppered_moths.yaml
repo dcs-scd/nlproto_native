@@ -1,0 +1,304 @@
+# Complete NetLogo Batch Simulation Configuration
+# This file contains all available configuration options with explanations
+
+# Basic Model Information
+name: "peppered_moths_optimized"
+description: "Complete moth evolution simulation with full configuration options"
+
+# Model and NetLogo Paths
+modelpath: "/users/dstefanescu/Desktop/NetLogo 6.4.0/models/Sample Models/Biology/Evolution/Peppered Moths.nlogo"
+nlpath: "/Applications/NetLogo 6.4.0"
+
+# Java Configuration (optional, auto-detected if not specified)
+java_home:
+  linux: "/usr/lib/jvm/java-11-openjdk-amd64"
+  macos: "/Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home"
+  windows: "C:\\Program Files\\Java\\jdk-11"
+
+# Experiment Configuration
+experiment:
+  # Model runtime (NetLogo ticks)
+  runtime: 200
+  
+  # Base random seed
+  base_seed: 12345
+  
+  # Default seeds per parameter combination (used if benchmark doesn't optimize)
+  seeds_per_combo: 1
+  
+  # Model parameters to vary
+  variables:
+    mutation:
+      type: range
+      min: 0
+      max: 100
+      step: 1
+      
+    selection:
+      type: range  
+      min: 0
+      max: 100
+      step: 1
+      
+  
+  # Model output metrics to collect
+  metrics:
+    - light-moths
+    - dark-moths
+    - medium-moths
+
+
+# Execution Configuration
+execution:
+  # Default execution parameters (may be overridden by benchmark)
+  cores: 4
+  chunk_size: 10
+  
+  # Executor backend selection
+  # Options: "original", "netlogo_suite", "netlogo_suite_optimized"
+  executor_backend: "original"
+  
+  # Memory and performance settings
+  estimated_memory_per_run_mb: 384
+  estimated_task_duration: 15.0
+  
+  # NetLogo executor specific settings
+  netlogo_executor_settings:
+    max_concurrent_tasks_factor: 2  # Multiplier for cores to get max concurrent tasks
+    memory_limit_mb: 512
+    task_timeout_seconds: 300
+    max_retries: 2
+    mock_mode: false  # Set to true for testing without NetLogo
+    
+    # Recovery configuration for error handling
+    recovery_config:
+      max_retries: 3
+      backoff_factor: 2.0
+      initial_delay: 1.0
+      max_delay: 60.0
+      retry_on_timeout: true
+      retry_on_memory_error: true
+      retry_backoff_seconds: 2.0
+      circuit_breaker_failure_threshold: 5
+      circuit_breaker_recovery_timeout: 30
+
+# Performance Optimizations (for netlogo_suite_optimized executor)
+performance_optimizations:
+  # Client-server mode settings
+  use_client_server: true
+  num_servers: 8
+  workspaces_per_server: 4
+  server_host: "localhost"
+  server_base_port: 9000
+  connections_per_server: 10
+  
+  # Adaptive chunking
+  enable_adaptive_chunking: true
+  chunk_size: 75  # Initial chunk size for adaptive system
+  target_chunk_execution_time: 45.0
+  
+  # Complexity-based batching
+  enable_complexity_batching: true
+  
+  # Result streaming for checkpointing
+  enable_result_streaming: true
+
+# Benchmark Configuration
+benchmark:
+  # Benchmark mode options:
+  # "auto" - Check for existing results, re-benchmark if old or missing
+  # "run_always" - Always run new benchmark
+  # "run_if_needed" - Run benchmark if no optimal config exists
+  # "use_existing_or_config" - Use existing benchmark results or config defaults
+  # "use_config_only" - Skip benchmark, use config defaults
+  benchmark_mode: "run_always"
+  
+  # Force re-benchmark even if recent results exist
+  force_rebenchmark: false
+  
+  # Maximum age of benchmark results in hours (for auto mode)
+  max_age_hours: 24
+  
+  # Benchmark engine selection
+  # Options: "unified_suite", "original"
+  benchmark_backend: "unified_suite"
+  
+  # Seeds optimization during benchmarking
+  # Option 1: Explicit list of seeds to test
+  seeds_to_test: [3, 5, 8]
+  
+  # Option 2: Range of seeds to test (used if seeds_to_test not specified)
+  min_seeds_per_combo: 3
+  max_seeds_per_combo: 8
+  
+  # Benchmark execution parameters
+  min_tasks_per_config_run: 300
+  max_tasks_per_config_run: 1500
+  replications_per_benchmark_config: 3
+  max_configurations_to_test: 30
+  
+  # Core testing options
+  # Option 1: Use fractions of available cores
+  core_options_type: "fractions"
+  core_options_fractions: [0.5, 0.75, 1.0]
+  
+  # Option 2: Use explicit core counts
+  # core_options_type: "list"
+  # core_options_list: [1, 2, 4, 8, 16]
+  
+  # Chunk sizes to test
+  chunk_sizes_to_test: [25, 50, 75, 100, 150]
+  
+  # Statistical analysis settings
+  use_adaptive_seeds: true
+  cv_target_metric: "task_execution_time"
+  cv_confidence_level: 0.90
+  cv_precision_threshold: 0.15
+  cv_stability_threshold: 0.05
+  
+  # Parameter combination testing
+  use_adaptive_param_combos: true
+  num_param_combos_per_run: 10
+  min_param_combos_for_cv: 5
+  
+  # Paths for loading existing benchmark results (optional)
+  # load_unified_config_from_path: "results/previous_benchmark/optimal_config.json"
+  # load_original_config_from_path: "results/previous_benchmark/optimal_config.pkl"
+
+# Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  directory: "results/logs"
+  log_performance_metrics: true
+  performance_metrics_file: "results/performance_metrics.json"
+
+# Output Configuration
+output:
+  base_directory: "results"
+  save_individual_results: true
+  save_combined_results: true
+  save_parameter_summary: true
+  save_intermediate_results: true
+  detailed_timing_analysis: true
+  
+  # File formats
+  formats:
+    - "csv"
+    - "json"
+    # - "parquet"  # Optional, requires pyarrow
+  
+  # Compression
+  compress_results: false
+  compression_format: "gzip"  # gzip, bz2, xz
+
+# Monitoring Configuration (optional)
+monitoring:
+  enabled: true
+  metrics_db: "results/monitoring/metrics.db"
+  logging:
+    directory: "results/monitoring/logs"
+    level: "INFO"
+  
+  # Performance thresholds
+  thresholds:
+    max_memory_mb: 8192
+    min_throughput_tasks_per_sec: 5.0  # Based on your benchmark results
+    max_avg_task_time_sec: 20.0
+    max_error_rate: 0.05
+  
+  # Alerts (if monitoring enabled)
+  alerts:
+    email_enabled: false
+    email_recipients: ["admin@example.com"]
+    slack_webhook: ""
+
+# System Health Check
+perform_health_check_on_startup: true
+health_check:
+  check_netlogo_installation: true
+  check_model_file: true
+  check_available_memory: true
+  check_disk_space: true
+  min_available_memory_gb: 2.0
+  min_available_disk_gb: 1.0
+  java_memory_check: true
+  netlogo_model_validation: true
+  server_connectivity_check: true
+
+# Advanced Configuration
+advanced:
+  # Simulation restart options
+  force_restart_simulation: false
+  
+  # Checkpointing
+  enable_checkpointing: true
+  checkpoint_interval_minutes: 30
+  
+  # Error handling
+  continue_on_errors: true
+  max_failed_tasks_percent: 10.0
+  
+  # Resource limits
+  max_simulation_time_hours: 24
+  memory_limit_simulation_gb: 16
+  
+  # Parallel processing
+  multiprocessing_method: "spawn"  # spawn, fork, forkserver
+  
+  # Temporary files
+  cleanup_temp_files: true
+  temp_directory: "/tmp/netlogo_batch"
+
+# Model-Specific Configuration (optional)
+# Add any model-specific parameters here
+model_specific:
+  # Example: moth evolution specific settings
+  moth_evolution:
+    environment_complexity: "high"
+    enable_predation: true
+    climate_change_rate: 0.02
+    
+  # Example: disease spread model settings
+  # disease_model:
+  #   population_density: 1000
+  #   infection_rate: 0.1
+
+# Experimental Features (use with caution)
+experimental:
+  # GPU acceleration (if available and supported)
+  enable_gpu_acceleration: false
+  
+  # Distributed computing (experimental)
+  enable_distributed_computing: false
+  cluster_nodes: []
+  
+  # Machine learning integration
+  enable_ml_optimization: false
+  ml_optimization_method: "bayesian"
+
+# Version and Compatibility
+config_version: "2.1"
+min_netlogo_version: "6.0"
+min_python_version: "3.8"
+
+# # Comments and Documentation
+# comments:
+#   created_by: "NetLogo Batch System"
+#   created_date: "2024-01-15"
+#   last_modified: "2024-01-15"
+#   description: "Complete configuration template with all available options"
+#   notes: |
+#     This configuration file includes all possible options for the NetLogo Batch system.
+#     Most options have sensible defaults and can be omitted if not needed.
+    
+#     Key sections:
+#     - experiment: Define your model parameters and metrics
+#     - execution: Control how simulations are run
+#     - performance_optimizations: Advanced performance tuning
+#     - benchmark: Automatic performance optimization
+#     - logging/output: Control what gets saved and where
+    
+#     For most users, the essential sections are:
+#     - name, modelpath, nlpath
+#     - experiment (variables and metrics)
+#     - benchmark (if you want automatic optimization)

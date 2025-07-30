@@ -1,0 +1,127 @@
+# Example 7: Execution Modes and Performance Settings
+# Demonstrates different execution configurations for various use cases
+# Shows how the C++ system automatically optimizes for different scenarios
+
+# Configuration A: Quick Testing Mode
+# Use case: Rapid prototyping and debugging
+quick_test_mode:
+  model: "models/sample.nlogo"
+  ticks: 50  # Short runs for quick feedback
+  
+  parameters:
+    - name: "test-param-1"
+      spec:
+        values: [0.1, 0.5, 0.9]  # Few values for quick testing
+    - name: "test-param-2"
+      spec:
+        min: 1.0
+        max: 3.0
+        step: 1.0
+  
+  repetitions:
+    reps: [1]  # Single run for speed
+  
+  metrics:
+    - name: "quick-metric"
+
+# Configuration B: Development Mode  
+# Use case: Model development and validation
+development_mode:
+  model: "models/sample.nlogo"
+  ticks: 100
+  
+  parameters:
+    - name: "dev-param"
+      spec:
+        min: 0.0
+        max: 1.0
+        step: 0.25  # Moderate resolution
+  
+  repetitions:
+    reps: [3]  # Few reps for variance check
+  
+  metrics:
+    - name: "validation-metric"
+
+# Configuration C: Production Research Mode
+# Use case: Final research runs with full statistical power
+production_mode:
+  model: "models/sample.nlogo"
+  ticks: 500  # Full simulation length
+  
+  parameters:
+    - name: "research-param-1"
+      spec:
+        min: 0.0
+        max: 1.0
+        step: 0.05  # High resolution
+    - name: "research-param-2"
+      spec:
+        n: 10
+        base: 2.0
+  
+  repetitions:
+    reps: [10, 15, 20]  # Adaptive high repetitions
+  
+  metrics:
+    - name: "primary-outcome"
+    - name: "secondary-outcome"
+    - name: "robustness-check"
+
+# Configuration D: High-Performance Computing Mode
+# Use case: Maximum throughput on cluster/server
+hpc_mode:
+  model: "models/sample.nlogo"
+  ticks: 200
+  
+  parameters:
+    - name: "hpc-param-1"
+      spec:
+        min: 0.0
+        max: 10.0
+        step: 0.1  # Very high resolution
+    - name: "hpc-param-2"
+      spec:
+        min: 0.0
+        max: 10.0
+        step: 0.1
+    - name: "hpc-param-3"
+      spec:
+        values: [0.1, 0.2, 0.5, 1.0, 2.0]
+  
+  repetitions:
+    reps: [5]  # Fixed reps for cluster efficiency
+  
+  metrics:
+    - name: "performance-metric"
+
+# Use development mode as the active configuration
+model: "models/sample.nlogo"
+ticks: 100
+
+parameters:
+  - name: "execution-demo-param"
+    spec:
+      min: 0.0
+      max: 1.0
+      step: 0.25
+
+repetitions:
+  reps: [3]
+
+metrics:
+  - name: "demo-metric"
+    aggregate: "mean"
+
+# Note: The C++ system automatically optimizes execution based on:
+# 1. Available CPU cores (detected via hwloc)
+# 2. Available memory (parsed from /proc/meminfo)  
+# 3. Parameter space size (computed from YAML)
+# 4. Expected runtime (estimated from ticks and historical data)
+#
+# Automatic optimizations include:
+# - Thread pool sizing (typically equals physical CPU cores, max 16)
+# - JVM heap allocation (25% of available RAM, scaled by tick count)
+# - Garbage collection strategy (EpsilonGC for minimal overhead)
+# - JIT compilation settings (fast compilation for short runs)
+# - NUMA-aware thread affinity (on supported systems)

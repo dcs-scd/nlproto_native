@@ -1,0 +1,30 @@
+/*
+ * NativeRuntime.java
+ * MIT 2024, Ultra-perf NetLogo driver
+ *
+ * Provides the minimal static gateway invoked directly
+ * from pure JNI (C++) to avoid reflection cost.
+ */
+
+package nl.proto;
+
+public final class NativeRuntime {
+    private static NetLogoRunner runner = null;
+
+    /** Called exactly once per process by JNI bridge. */
+    public static void init(String modelPath) throws Exception {
+        runner = new NetLogoRunner(modelPath);
+    }
+
+    /**
+     * Core JNI fast entry:
+     * returns mean, stdev, entropy as array.
+     */
+    public static double[] run(int ticks, double paramA,
+                               double paramB, int repetition) throws Exception {
+        if (runner == null) {
+            throw new IllegalStateException("NetLogoRunner not initialized");
+        }
+        return runner.run(ticks, paramA, paramB, repetition);
+    }
+}

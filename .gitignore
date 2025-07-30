@@ -1,0 +1,10 @@
+/runs
+/.cache
+*.class
+*.so
+*.dylib
+*.out
+*.o
+/bin
+/.gradle
+/volatile.*

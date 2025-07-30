@@ -1,0 +1,54 @@
+# Example 10: Social Science - Schelling Segregation Model
+# Research question: How do individual preferences lead to macro-level segregation?
+# Use case: Understanding social dynamics and tipping points
+
+model: "models/Segregation.nlogo"  # Schelling's classic segregation model
+ticks: 300  # Sufficient time for neighborhood stabilization
+
+parameters:
+  # Population composition
+  - name: "density"
+    spec:
+      min: 60.0
+      max: 95.0
+      step: 5.0
+    # Population density: [60, 65, 70, 75, 80, 85, 90, 95]
+
+  # Critical parameter: similarity tolerance
+  - name: "%-similar-wanted"
+    spec:
+      min: 10.0
+      max: 80.0
+      step: 5.0
+    # Fine-grained to detect tipping points: [10, 15, 20, ..., 80]
+
+  # Neighborhood definition
+  - name: "number-of-ethnicities"
+    spec:
+      values: [2, 3, 4, 5]
+    # Test different group complexities
+
+  # Spatial constraints
+  - name: "neighborhood-radius"
+    spec:
+      values: [1, 2, 3, 4]
+    # How far agents look for similar neighbors
+
+# Multiple repetitions crucial for stochastic social processes
+repetitions:
+  reps: [10, 15, 20]  # High reps needed due to randomness in agent behavior
+
+# Social science metrics
+metrics:
+  - name: "percent-similar"
+    aggregate: "mean"
+  - name: "percent-unhappy"
+    aggregate: "mean"
+  - name: "segregation-index"
+    aggregate: "mean"
+  - name: "convergence-time"
+    aggregate: "mean"
+  - name: "final-stability"
+    aggregate: "mean"
+  - name: "spatial-clustering"
+    aggregate: "mean"
