@@ -39,7 +39,18 @@ int main(int argc, char* argv[]) {
     RetryPolicy<5> retry;
 
     out.open_result_file(out_name);
-    out.write_result("job_id,rep,mean");      // header row
+    
+    // Create header based on whether metrics are specified
+    std::string header = "job_id,rep";
+    bool use_metrics = !cfg.metrics.empty();
+    if (use_metrics) {
+        for (const std::string& metric : cfg.metrics) {
+            header += "," + metric;
+        }
+    } else {
+        header += ",mean";  // Legacy single metric
+    }
+    out.write_result(header);
 
     std::atomic<size_t> done{0};
     for (const JobParams& jp : matrix) {
@@ -48,10 +59,21 @@ int main(int argc, char* argv[]) {
                 try {
                     retry.invoke([&] {
                         cb.call([&] {
-                            double res = run_netlogo_sim(cfg, jp.param_string, rep);
-                            out.write_result(fmt::format("{}", jp.job_id) + "," +
-                                             std::to_string(rep) + "," +
-                                             std::to_string(res));
+                            std::string result_line = fmt::format("{},{}", jp.job_id, rep);
+                            
+                            if (use_metrics) {
+                                // Use new metrics collection
+                                std::vector<double> metrics_results = run_netlogo_sim_with_metrics(cfg, jp.param_string, rep);
+                                for (double metric_value : metrics_results) {
+                                    result_line += "," + std::to_string(metric_value);
+                                }
+                            } else {
+                                // Legacy single metric
+                                double res = run_netlogo_sim(cfg, jp.param_string, rep);
+                                result_line += "," + std::to_string(res);
+                            }
+                            
+                            out.write_result(result_line);
                             ++done;
                         });
                     });

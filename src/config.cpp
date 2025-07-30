@@ -64,7 +64,26 @@ ExperimentConfig load_experiment(const std::string& f) {
         
         if (exp["metrics"]) {
             for (const auto& metric : exp["metrics"]) {
+                if (metric.IsScalar()) {
+                    // Simple string format
+                    e.metrics.push_back(metric.as<std::string>());
+                } else if (metric["name"]) {
+                    // Object format with name field
+                    e.metrics.push_back(metric["name"].as<std::string>());
+                }
+            }
+        }
+    }
+    
+    // Top-level metrics (for advanced YAML configs)
+    if (n["metrics"] && e.metrics.empty()) {
+        for (const auto& metric : n["metrics"]) {
+            if (metric.IsScalar()) {
+                // Simple string format
                 e.metrics.push_back(metric.as<std::string>());
+            } else if (metric["name"]) {
+                // Object format with name field
+                e.metrics.push_back(metric["name"].as<std::string>());
             }
         }
     }

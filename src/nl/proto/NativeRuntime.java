@@ -36,4 +36,25 @@ public final class NativeRuntime {
         
         return runner.run(ticks, commands, String.valueOf(seed));
     }
+    
+    /**
+     * Core JNI entry with metrics collection:
+     * Converts C++ parameters to NetLogo commands and returns multiple metrics.
+     */
+    public static double[] runWithMetrics(int ticks, double paramA, double paramB, int seed, String[] metrics) throws Exception {
+        if (runner == null) {
+            throw new IllegalStateException("NetLogoRunner not initialized");
+        }
+        
+        // Build NetLogo command string from parameters
+        String commands = String.format(
+            "set mutation %f\n" +
+            "set selection %f\n" +
+            "setup\n" +
+            "repeat %d [ go ]",
+            paramA, paramB, ticks
+        );
+        
+        return runner.runWithMetrics(ticks, commands, String.valueOf(seed), metrics);
+    }
 }
